@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bindings>
+    <MainWindow>
+        <global>
+            <!-- <action name="open_file_explorer"   key="f"></action>
+            <action name="select_top"           key="1"></action>
+            <action name="select_mid_or_left"   key="2"></action>
+            <action name="select_right"         key="3"></action> -->
+            
+            <!-- <action name="Cancel Selection" key="s"></action> -->
+            <!-- <action name="Test Action" key="j"></action> -->
+        </global>
+        <local>.
+        
+        </local>
+    </MainWindow>
+
+    <SWManager>
+        <global>
+            <!-- <action name="open_file_explorer" key="f"></action> -->
+            <!-- <action name="Cancel Selection" key="s"></action> -->
+            <!-- <action name="Test Action" key="j"></action> -->
+            <!-- <action name="open_file_explorer"   key="f"></action> -->
+            <action name="select_top"           key="1"></action>
+            <action name="select_mid_or_left"   key="2"></action>
+            <action name="select_right"         key="3"></action>
+
+            <action name="local_files_sw"       key="l"></action>
+            <action name="yandex_files_sw"      key="y"></action>
+            <action name="app_files_sw"         key="a"></action>
+            
+            <action name="player_sw"            key="m"></action>
+            <action name="player_status_sw"     key="s"></action>
+        </global>
+        <local>
+        </local>
+    </SWManager>
+
+    <!-- <TopInfoHolder>
+        <global>
+        </global>
+
+        <local>
+        </local>
+    </TopInfoHolder>
+
+    <MainHolder>
+        <global>
+        </global>
+
+        <local>
+        </local>
+    </MainHolder> -->
+
+    <!-- <AdditionalHolder> -->
+        <!-- <global> -->
+        <!-- </global> -->
+        
+        <!-- <local> -->
+            <!-- <action name="local_mode"               key="l"></action>
+            <action name="yandex_mode"              key="y"></action>
+            <action name="appdb_mode"               key="a"></action> -->
+        <!-- </local> -->
+    <!-- </AdditionalHolder> -->
+
+    <!-- <CentralHolder>
+    <global>
+    </global>
+
+    <local>
+    </local>
+    </CentralHolder> -->
+
+    <!-- <ContainerSW>
+        <global>
+        </global>
+        <local>
+            <action name="local_mode"               key="l"></action>
+            <action name="yandex_mode"              key="y"></action>
+            <action name="appdb_mode"               key="a"></action>
+        </local>
+    </ContainerSW> -->
+    
+    <PlayerSW>
+        <global>
+        </global>
+        <local>
+            <action name="help"             key="h"></action>
+            <action name="up"               key="up"></action>
+            <action name="down"             key="down"></action>
+            <action name="play_selected"    key="enter"></action>
+            <action name="shuffle_tracks"   key="s"></action>
+        </local>
+    </PlayerSW>
+
+    <PlayerStatusSW>
+        <global>
+            <action name="pause_play"           key="p"></action>
+            <action name="fast_forward"         key="right"></action>
+            <action name="rewind"               key="left"></action>
+            <action name="volume_up"            key="plus"></action>
+            <action name="volume_down"          key="minus"></action>
+            <action name="toggle_repeat_mode"   key="r"></action>
+        </global>
+        <local>
+            <action name="help" key="h"></action>
+        </local>
+    </PlayerStatusSW>
+
+    <!-- <FileExplorerSW> -->
+        <!-- <global> -->
+        <!-- </global> -->
+        <!-- <local> -->
+            <!-- <action name="help"                     key="h"></action>
+            <action name="up"                       key="up"></action>
+            <action name="down"                     key="down"></action>
+            <action name="open_dir"                 key="enter"></action>
+            <action name="open_entry_in_playersw"   key="ctrl_space"></action>
+            <action name="add_entry_in_playersw"    key="space"></action> -->
+            <!-- <action name="local_mode"               key="l"></action> -->
+            <!-- <action name="yandex_mode"              key="y"></action> -->
+            <!-- <action name="appdb_mode"               key="a"></action> -->
+            <!-- todo: temporary solution, fix later -->
+            <!-- <action name="local_mode"               key="l"></action>
+            <action name="yandex_mode"              key="y"></action>
+            <action name="appdb_mode"               key="a"></action> -->
+        <!-- </local> -->
+    <!-- </FileExplorerSW> -->
+
+    <LocalFilesSW>
+        <global>
+        </global>
+
+        <local>
+            <action name="help"                     key="h"></action>
+            <action name="up"                       key="up"></action>
+            <action name="down"                     key="down"></action>
+            <action name="lasting_select"           key="right"></action>
+            <action name="action_on_last_selected"  key="d"></action>
+            <action name="open_dir"                 key="enter"></action>
+            <action name="open_entry_in_playersw"   key="ctrl_space"></action>
+            <action name="add_entry_in_playersw"    key="space"></action>
+        </local>
+    </LocalFilesSW>
+
+     <YandexFilesSW>
+        <global>
+        </global>
+
+        <local>
+            <action name="help"                     key="h"></action>
+            <action name="up"                       key="up"></action>
+            <action name="down"                     key="down"></action>
+            <action name="lasting_select"           key="right"></action>
+            <action name="action_on_last_selected"  key="d"></action>
+            <action name="open_dir"                 key="enter"></action>
+            <action name="open_entry_in_playersw"   key="ctrl_space"></action>
+            <action name="add_entry_in_playersw"    key="space"></action>
+        </local>
+    </YandexFilesSW>
+
+    <AppFilesSW>
+        <global>
+        </global>
+
+        <local>
+            <action name="help"                     key="h"></action>
+            <action name="up"                       key="up"></action>
+            <action name="down"                     key="down"></action>
+            <action name="open_dir"                 key="enter"></action>
+            <action name="open_entry_in_playersw"   key="ctrl_space"></action>
+            <action name="add_entry_in_playersw"    key="space"></action>
+        </local>
+    </AppFilesSW>
+
+    <DialogSW>
+        <global>
+        </global>
+
+        <local>
+            <action name="up"                       key="up"></action>
+            <action name="down"                     key="down"></action>
+            <action name="left"                     key="left"></action>
+            <action name="right"                    key="right"></action>
+            <action name="enter"                    key="enter"></action>
+            <action name="tab"                      key="tab"></action>
+        </local>
+    </DialogSW>
+
+    <!-- <LocalFilesSW>
+        <global>
+        </global>
+        <local>
+        <action name="help"                     key="h"></action>
+        <action name="up"                       key="up"></action>
+        <action name="down"                     key="down"></action>
+        <action name="open_dir"                 key="enter"></action>
+        <action name="open_entry_in_playersw"   key="ctrl_space"></action>
+        <action name="add_entry_in_playersw"    key="space"></action>
+        </local>
+    </LocalFilesSW>
+
+    <YandexFilesSW>
+        <global>
+        </global>
+        <local>
+        <action name="help"                     key="h"></action>
+        <action name="up"                       key="up"></action>
+        <action name="down"                     key="down"></action>
+        <action name="open_dir"                 key="enter"></action>
+        <action name="open_entry_in_playersw"   key="ctrl_space"></action>
+        <action name="add_entry_in_playersw"    key="space"></action>
+        </local>
+    </YandexFilesSW>
+
+    <AppFilesSW>
+        <global>
+        </global>
+        <local>
+        <action name="help"                     key="h"></action>
+        <action name="up"                       key="up"></action>
+        <action name="down"                     key="down"></action>
+        <action name="open_dir"                 key="enter"></action>
+        <action name="open_entry_in_playersw"   key="ctrl_space"></action>
+        <action name="add_entry_in_playersw"    key="space"></action>
+        </local>
+    </AppFilesSW> -->
+
+    <SettingsSW>
+        <global>
+        </global>
+        <local>
+            <action name="help" key="h"></action>
+        </local>
+    </SettingsSW>
+</bindings>
