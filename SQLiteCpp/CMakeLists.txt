@@ -193,7 +193,6 @@ if (SQLITECPP_INCLUDE_SCRIPT)
      .github/workflows/cmake_builtin_lib.yml
      .github/workflows/cmake_subdir_example.yml
      .github/workflows/meson.yml
-     .gitignore
      .gitmodules
      .travis.yml
      appveyor.yml

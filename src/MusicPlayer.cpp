@@ -273,8 +273,7 @@ MusicPlayer::MusicPlayer(SWManager* swManager)
 {
 	// todo: разобраться с путем этой либы, думаю лучше ее включить в директорию проекта
 	// разобраться с лицензией
-	int pluginFlac =
-		Bass_PluginLoad("/home/ellain/Program_Files/bass_flac/libbassflac.so", 0);
+	int pluginFlac = Bass_PluginLoad("libbassflac.so", 0);
 	Bass_Init(-1, 44100, BASS_DEVICE_3D, 0, 0);
 }
 
