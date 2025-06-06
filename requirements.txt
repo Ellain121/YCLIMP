@@ -1,0 +1,2 @@
+sudo apt install libasio-dev libncurses-dev -y
+pip install yandex-music --break-system-packages
