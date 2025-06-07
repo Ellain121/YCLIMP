@@ -20,7 +20,7 @@
 Если вдруг кто-то реально будет пользоваться, могу дописать полностью, добавить какие-нибудь фичи и подправить код + пофиксить баги, а они тут наверняка будут.<br />
 Хоткеи можно смотреть и менять в директории ./data.<br />
 
-В программе используется сторонний код: bass, boost asio, rapidxml, SQLiteCpp, ncurses.<br />
+В программе используется сторонний код: bass, boost asio, rapidxml, SQLiteCpp, ncurses, yandex-music-api.<br />
 
 
 ![Screenshot from 2025-06-03 12-43-40](https://github.com/user-attachments/assets/ed0857bb-fb8f-44f7-93bd-fefe7c783018)
