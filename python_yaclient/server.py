@@ -25,11 +25,14 @@ class Server:
 
     # send_dir_files = send_any_files # cause shitcode!
     def send_dir_files(self, list: List[List[str]]):
-        # bytes = 'folder\r\n'
-        bytes = list[0] + "\r\n"
-        for dir_el in list[1:]:  # start from second
-            entry = dir_el[0] + ',' + dir_el[1] + '\r\n'
-            bytes += entry
+        # bytes = list[0] + "\r\n"
+        bytes = ""
+        for dir_el in list:
+            if isinstance(dir_el, str) == True:
+                bytes += dir_el + '\r\n'
+            else:
+                entry = dir_el[0] + ',' + dir_el[1] + '\r\n'
+                bytes += entry
         self.conn.sendall(bytes.encode() + EOF.encode())
         logging.debug("len", len(list))
         logging.debug(bytes)
@@ -47,5 +50,10 @@ class Server:
         logging.debug("track_list sent!")
 
     def send_track_bytes(self, bytes):
+        self.conn.sendall(bytes + EOF.encode())
+        logging.debug("song_bytes sent!")
+
+    def send_track_bytes_with_name(self, bytes, name: str):
+        bytes = (name + "\r\n").encode() + bytes
         self.conn.sendall(bytes + EOF.encode())
         logging.debug("song_bytes sent!")

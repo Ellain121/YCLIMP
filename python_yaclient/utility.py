@@ -3,6 +3,14 @@ import re
 from enum import Enum
 from typing import List, Tuple, Dict, Any
 
+import logging
+#
+
+
+logging.basicConfig(
+    format=u'%(filename)s[line:%(lineno)d]# %(levelname)-4s [%(asctime)s]  %(message)s', level=logging.DEBUG, filename='python.log')
+
+
 leftovers_queue = ""
 
 
@@ -25,9 +33,9 @@ class CMD:
 def extract_cmd(msg: str) -> CMD:
     cmd_list = re.findall(r'\w+|\s', msg)
     assert len(cmd_list) > 0
-    print("msg:|", msg, sep="")
+    logging.info("msg:|", msg)
     cmd_str = cmd_list[0]
-    print("here:|", cmd_str, "|", cmd_list, sep="")
+    logging.info("here:|", cmd_str, "|", cmd_list)
     assert cmd_str in cmd_table, "Unknown command!"
     cmd = cmd_table.get(cmd_str)
 
@@ -54,7 +62,7 @@ def recv(user_socket: socket, delim):
 
     msg = dataStr[:dataStr.index('\r\n')]
     leftovers = dataStr[dataStr.index('\r\n') + len('\r\n'):]
-    print("Message:|", msg, sep="")
-    print("Leftovers:", leftovers, " size: ", len(leftovers), sep="")
+    logging.info("Message:|", msg)
+    logging.info("Leftovers:", leftovers, " size: ", len(leftovers))
     leftovers_queue = leftovers
     return msg

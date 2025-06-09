@@ -13,7 +13,7 @@
 #include <string>
 
 // debug
-#include "Debug.hpp"
+//#include "Debug.hpp"
 
 namespace
 {
@@ -23,6 +23,10 @@ std::string		   raw_ip_address = "127.0.0.1";
 unsigned short	   port_num = 5002;
 
 inline static std::regex musicExtRegex{".*\\.(?:mp3|mp2|mp1|ogg|wav|aiff|flac)"};
+
+const std::string& FOLDER_TYPE = "folder";
+const std::string& TRACK_TYPE = "track";
+const std::string& RADIO_TYPE = "radio";
 
 }	 // namespace
 
@@ -273,10 +277,8 @@ void YandexClient::NewFile(File* oldFile, File_Ptr newFile)
 		new_path = newFile->path.parent_path();
 		new_name = new_path.filename();
 		auto found = folderCache.find(new_name);
-		Debug::Print("Try find:" + new_name + "|newFilepath:" + newFile->path.string());
 		assert(found != folderCache.end());
 		new_location_id = found->second;
-		Debug::Print("found: " + new_location_id);
 
 		oldFile->path = new_path;
 		oldFile->name = new_name;
@@ -285,7 +287,6 @@ void YandexClient::NewFile(File* oldFile, File_Ptr newFile)
 	else
 	{
 		folderCache.insert(std::make_pair(oldFile->name, oldFile->location_id));
-		Debug::Print("INSERT:" + oldFile->path.string() + "|" + oldFile->location_id);
 
 		oldFile->path = newFile->path;
 		oldFile->name = newFile->name;
@@ -340,29 +341,31 @@ std::vector<File_Ptr> YandexClient::GetDirFiles(
 				break;
 			std::string fileEntry{filesList.substr(cursor, found - cursor)};
 
-			// first argument is always a type of a subsequent list files
-			if (i == 0)
+			// if line without a comma, means it's next list of files type
+			auto found_comma = fileEntry.find(',');
+			if (found_comma == std::string::npos)
 			{
 				// assert folder for now
-				// assert(fileEntry == "folder");
-				if (fileEntry == "folder")
+				if (fileEntry == FOLDER_TYPE)
 					type = File::Type::Directory;
-				else
+				else if (fileEntry == TRACK_TYPE)
 					type = File::Type::Track;
+				else if (fileEntry == RADIO_TYPE)
+					type = File::Type::Radio;
+				else
+					assert(("BAD fileEntry!", false));
 			}
 			else
 			{
-				auto found_comma = fileEntry.find(',');
+				//				auto found_comma = fileEntry.find(',');
 				// only 2 args divided by comma is expected
-				assert(found_comma != std::string::npos);
+				//				assert(found_comma != std::string::npos);
 				std::string name = fileEntry.substr(0, found_comma);
 				std::string id = fileEntry.substr(found_comma + 1);
 
 				files.push_back(std::shared_ptr<File>(new YaFile{
 					file->client, name, file->path / fs::path{name}, id, type}));
-				//				Debug::Print("---------->" + (file->path / fs::path{name}).string());
 				File test{file->client, name, file->path, "id", type};
-				// Debug::Print("->" + test.location_id);
 			}
 			// what is a file anyway
 			++i;
@@ -412,9 +415,21 @@ std::string YandexClient::GetSongData(File* file)
 	std::string songData;
 	try
 	{
-		// send request
-		std::string request{"GET_TRACK " + file->location_id +
+		std::string request;
+
+		if (file->type == File::Type::Track)
+		{
+			// track request
+			request =
+				std::string{"GET_TRACK " + file->location_id +
 							"\r\n"};	// todo: is location_id valid id in python client?
+		}
+		else
+		{
+			// radio init/next track request
+			request = std::string{"RADIO_NEXT\r\n"};
+		}
+
 		asio::write(sock, asio::buffer(request));
 
 		// get answer
@@ -529,12 +544,10 @@ std::vector<File_Ptr> AppClient::GetDirFiles(
 	else
 	{
 		std::vector<File_Ptr> appTrackFiles;
-		Debug::Print("HERE: " + file->name);
 
 		//		AppFile* appFile{dynamic_cast<AppFile*>(file)};
 		//		assert(("Error! File is not an appFile!", appFile != nullptr));
 		auto dbTracks = db.trackDao.FetchAllFromPlaylist(file->playlistId);
-		Debug::Print("dbTracks.size() " + std::to_string(dbTracks.size()));
 		for (auto& dbTrack : dbTracks)
 		{
 			appTrackFiles.push_back(AppFile::ConvertFromDBTrack(dbTrack));
@@ -565,7 +578,6 @@ std::string AppClient::GetSongData(File* file)
 	AppFile* appFile{dynamic_cast<AppFile*>(file)};
 	assert(("Error! File is not an appFile!", appFile != nullptr));
 
-	Debug::Print("RAZVILKA: " + appFile->path.string());
 	if (appFile->path.string().starts_with("/Yandex"))
 	{
 		return yaClient.GetSongData(file);

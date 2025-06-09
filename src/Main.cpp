@@ -32,7 +32,7 @@ std::string exec(const char* cmd)
 
 void StartPythonClient()
 {
-	exec("python3 ../python_yaclient/main.py");
+	exec("python3 ../python_yaclient/main.py > file.txt 2>&1");
 }
 
 void startNcurses()

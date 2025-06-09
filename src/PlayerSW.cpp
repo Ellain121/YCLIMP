@@ -44,8 +44,12 @@ void PlayerSW::InitializeHotKeysActions()
 		{
 			auto		file = this->mFileSelector.GetSelected().value();
 			std::string bytes = file->GetSongData();
-			this->GetContext().swManager.AddSWEvent(SWEvent{ESWTypes::PlayerStatus,
-				ESWEventAction::PlayMusicBytes, std::move(bytes), file->name});
+			auto		found = bytes.find("\r\n");
+			assert(("No song name specified!", found != std::string::npos));
+
+			this->GetContext().swManager.AddSWEvent(
+				SWEvent{ESWTypes::PlayerStatus, ESWEventAction::PlayMusicBytes,
+					bytes.substr(found + 2), bytes.substr(0, found)});
 		}));
 	mHotKeyComponent.InsertBindingAction(std::make_pair("shuffle_tracks", [this]() {	//
 		this->mFileSelector.ShuffleElements();
@@ -89,8 +93,12 @@ void PlayerSW::HandleSWEvents(std::vector<SWEvent>& swEvents)
 			auto file = mFileSelector.GetSelected().value();
 			// {
 			std::string bytes = file->GetSongData();
-			this->GetContext().swManager.AddSWEvent(SWEvent{ESWTypes::PlayerStatus,
-				ESWEventAction::PlayMusicBytes, std::move(bytes), file->name});
+			auto		found = bytes.find("\r\n");
+			assert(("No song name specified!", found != std::string::npos));
+
+			this->GetContext().swManager.AddSWEvent(
+				SWEvent{ESWTypes::PlayerStatus, ESWEventAction::PlayMusicBytes,
+					bytes.substr(found + 2), bytes.substr(0, found)});
 
 			swEvents.erase(swEvents.begin() + i);
 		}

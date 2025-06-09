@@ -8,8 +8,22 @@ from Token import TOKEN
 import logging
 #
 
+
 logging.basicConfig(
     format=u'%(filename)s[line:%(lineno)d]# %(levelname)-4s [%(asctime)s]  %(message)s', level=logging.DEBUG, filename='python.log')
+
+
+######
+class FileType(Enum):
+    FOLDER = 0
+    TRACK = 1
+    RADIO = 2
+
+
+file_type = {FileType.FOLDER: "folder",
+             FileType.TRACK: "track", FileType.RADIO: "radio"}
+
+######
 
 
 class StaticDirs(Enum):
@@ -49,18 +63,24 @@ class YaClient:
             self._server.send_track_bytes(track_bytes)
 
         elif cmd.cmd == Command.RADIO_NEXT:
-            self._radio_next()
+            if self._radio == None:
+                self._radio_start()
+            else:
+                self._radio_next()
 
     def _get_dir_files(self, id: str):
         return_list: List[List[str]] = []
         if id in dirs:
             dir_id = dirs[id]
             if dir_id == StaticDirs.ROOT:
-                return_list.append("folder")  # shitcode, yeah
+                # shitcode, yeah
+                return_list.append(file_type[FileType.FOLDER])
                 return_list.append(("Playlists", "1"))
+                return_list.append(file_type[FileType.RADIO])
                 return_list.append(("Radio", "2"))
             elif dir_id == StaticDirs.PLAYLISTS:
-                return_list.append("folder")  # shitcode, yeah
+                # shitcode, yeah
+                return_list.append(file_type[FileType.FOLDER])
                 playlists = self._client.users_playlists_list()
                 for playlist in playlists:
                     return_list.append((playlist.title,  str(playlist.kind)))
@@ -72,7 +92,7 @@ class YaClient:
                 pass
 
             elif dir_id == StaticDirs.FAVORITES:
-                return_list.append("audio")  # shitcode, yeah
+                return_list.append(file_type[FileType.TRACK])  # shitcode, yeah
                 favorite_tracks = self._client.users_likes_tracks()
                 fav_tracks = favorite_tracks.fetch_tracks()
                 for f_track in fav_tracks:
@@ -85,7 +105,7 @@ class YaClient:
             # specific playlist id
             # Get specific playlist tracks
             # Warning code quality is dubious
-            return_list.append("audio")  # shitcode, yeah
+            return_list.append(file_type[FileType.TRACK])  # shitcode, yeah
             playlist_id: str = id
             playlist = self._client.users_playlists(playlist_id)
             sh_tracks = playlist.fetch_tracks()
@@ -115,20 +135,27 @@ class YaClient:
         self._radio = Radio(self._client)
         station_id = 'user:onyourwave'
         station_from = "potato"
-        first_track = self._radio.start_radio(station_id, station_from)
+        track = self._radio.start_radio(station_id, station_from)
+        file_name = ','.join(map(str, track.artistsName())) + \
+            ": " + track.title
         # todo redo, probably first track is lost
-        print('[Radio] First track is:', first_track.title)
-        print("Waiting...")
+        logging.info("Getting bytes... " + file_name)
+        bytes = (file_name + "\r\n").encode() + \
+            track.download_bytes()
+        logging.info("Sending... " + file_name)
+        # self._server.send_track_bytes(bytes)
+        self._server.send_track_bytes_with_name(bytes, file_name)
 
     def _radio_next(self):
         track = self._radio.play_next()
         file_name = ','.join(map(str, track.artistsName())) + \
             ": " + track.title
-        print("Getting bytes... " + file_name)
+        logging.info("Getting bytes... " + file_name)
         bytes = (file_name + "\r\n").encode() + \
             track.download_bytes()
-        print("Sending... " + file_name)
-        self._server.send_track_bytes(bytes)
+        logging.info("Sending... " + file_name)
+        # self._server.send_track_bytes(bytes)
+        self._server.send_track_bytes_with_name(bytes, file_name)
 
     def _get_user_playlists(self):
         user_playlists: List[Playlist] = self._client.user_playlists_list()
@@ -149,7 +176,7 @@ class YaClient:
             track = sh_track.fetch_track()
             file_name = ','.join(map(str, track.artistsName())) + \
                 ": " + track.title
-            print("List:", file_name)
+            logging.info("List:", file_name)
 
             track_id = sh_track.id
             return_list.append([track_id, file_name])
