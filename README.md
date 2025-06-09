@@ -8,21 +8,23 @@
 2) Слушать ваши треки или радио с яндекса<br />
 3) Создавать локальные плейлисты и добавлять туда треки как с ПК так и с яндекса.<br />
 
-Как запустить(пока немножко геморрой) :<br />
-0) Придется менять некторые пути, например путь до g++ + подобные локальные проблемы + установить SQLiteCpp
-1) Внутри папки python_yaclient создать файл Token.py, с содержимым TOKEN = 'вставить_ваш_токен_от_яндекса'<br />
-2) mkdir build<br />
-3) cd ./build<br />
-4) cmake ..<br />
-5) запускать изнутри диры build<br />
+Как запустить:<br />
+1) Наличие g++-13, либо нужно изменить компилятор на свой g++, но нужно наличие поддержки C++20
+2) sh requirements.txt # Предварительно проверить его содержимое
+3) Внутри папки python_yaclient создать файл Token.py, с содержимым TOKEN = 'вставить_ваш_токен_от_яндекса'<br />
+4) mkdir build<br />
+5) cd ./build<br />
+6) cmake ..<br />
+7) запускать изнутри диры build<br />
 
 Если вдруг кто-то реально будет пользоваться, могу дописать полностью, добавить какие-нибудь фичи и подправить код + пофиксить баги, а они тут наверняка будут.<br />
 Хоткеи можно смотреть и менять в директории ./data.<br />
 
-В программе используется сторонний код: bass, rapidxml, SQLiteCpp.<br />
+В программе используется сторонний код: bass, boost asio, rapidxml, SQLiteCpp, ncurses, yandex-music-api.<br />
 
-![Screenshot from 2025-06-03 12-43-40](https://github.com/user-attachments/assets/156e1208-5138-43d9-9de7-9fa71055bbbd)
-![Screenshot from 2025-06-03 12-44-17](https://github.com/user-attachments/assets/50dd9800-00e2-4078-abc5-47737d856c6f)
-![Screenshot from 2025-06-03 12-45-17](https://github.com/user-attachments/assets/0c2ce7ad-5399-430d-976b-d451e896ad61)
-![Screenshot from 2025-06-03 12-45-30](https://github.com/user-attachments/assets/f171c55d-7db5-46e2-92c4-8b2f9305bcb3)
-![Screenshot from 2025-06-03 12-45-49](https://github.com/user-attachments/assets/368c3377-6dbf-4031-8e57-824358f838c5)
+
+![Screenshot from 2025-06-03 12-43-40](https://github.com/user-attachments/assets/ed0857bb-fb8f-44f7-93bd-fefe7c783018)
+![Screenshot from 2025-06-03 12-44-17](https://github.com/user-attachments/assets/8ba6c95e-339e-487d-bd22-582c24d8cd4b)
+![Screenshot from 2025-06-03 12-45-17](https://github.com/user-attachments/assets/8c222b23-d055-419d-85dd-a355a109f33a)
+![Screenshot from 2025-06-03 12-45-30](https://github.com/user-attachments/assets/f2538505-e520-40f2-b922-21f8cec25cd5)
+![Screenshot from 2025-06-03 12-45-49](https://github.com/user-attachments/assets/b02ed455-e016-4094-b092-cbc77c22eb68)
