@@ -59,9 +59,9 @@ void Application::ProcessUserEvents()
 {
 	int	  k = getch();
 	Event event{k};
-	if (event.key == EEventKey::Q)
-	{
-		mbProgramActive = false;
-	}
+	//	if (event.key == EEventKey::Q)
+	//	{
+	//		mbProgramActive = false;
+	//	}
 	mWindow.HandleUserEvent(event);
 }

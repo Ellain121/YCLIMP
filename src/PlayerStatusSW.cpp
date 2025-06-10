@@ -19,6 +19,9 @@ PlayerStatusSW::PlayerStatusSW(
 
 void PlayerStatusSW::InitializeHotKeysActions()
 {
+	mHotKeyComponent.InsertBindingAction(
+		std::make_pair("skip_track", [this]() { this->mMusicPlayer.NextSongRequest(); }));
+
 	mHotKeyComponent.InsertBindingAction(std::make_pair(
 		"pause_play", [this]() { this->mMusicPlayer.ToggleContinuePause(); }));
 

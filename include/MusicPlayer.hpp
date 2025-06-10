@@ -39,6 +39,7 @@ public:
 	void VolumeDown5Percent();
 
 	void ToggleRepeatMode();
+	void NextSongRequest();
 
 	// bool    IsStreamDone() const;
 	double			   GetCurSongDuration() const;
@@ -65,7 +66,6 @@ private:
 	void Pause();
 	void SetVolume(const float& volume);
 	void FinishPlayedMusic();
-	void NextSongRequest();
 
 private:
 	SWManager*	mSWManager;

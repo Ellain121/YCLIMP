@@ -70,7 +70,7 @@ std::vector<File_Ptr> File::GetDirFiles(
 	return client.GetDirFiles(this, noDirs, onlyMusicExtensions, recursively);
 }
 
-std::string File::GetSongData()
+std::pair<std::string, std::string> File::GetSongData()
 {
 	return client.GetSongData(this);
 }
@@ -237,14 +237,14 @@ std::vector<File_Ptr> FSClient::GetDirFiles(
 	return files;
 }
 
-std::string FSClient::GetSongData(File* file)
+std::pair<std::string, std::string> FSClient::GetSongData(File* file)
 {
 	assert(fs::is_regular_file(file->path));
 	std::fstream	  fileInput{file->path};
 	std::stringstream ss;
 	ss << fileInput.rdbuf();
 
-	return std::string{ss.str()};
+	return std::make_pair(file->name, std::string{ss.str()});
 }
 
 std::unordered_map<std::string, std::string> YandexClient::folderCache{};
@@ -407,11 +407,12 @@ std::vector<File_Ptr> YandexClient::GetDirFiles(
 	return files;
 }
 
-std::string YandexClient::GetSongData(File* file)
+std::pair<std::string, std::string> YandexClient::GetSongData(File* file)
 {
 	if (!mIsConnectionEstablished)
 		Connect();
 
+	std::string songName;
 	std::string songData;
 	try
 	{
@@ -420,9 +421,8 @@ std::string YandexClient::GetSongData(File* file)
 		if (file->type == File::Type::Track)
 		{
 			// track request
-			request =
-				std::string{"GET_TRACK " + file->location_id +
-							"\r\n"};	// todo: is location_id valid id in python client?
+			// todo: is location_id valid id in python client?
+			request = std::string{"GET_TRACK " + file->location_id + "\r\n"};
 		}
 		else
 		{
@@ -437,16 +437,20 @@ std::string YandexClient::GetSongData(File* file)
 		asio::read_until(sock, buf, _EOF_);
 		std::string bytes{
 			std::istreambuf_iterator<char>(&buf), std::istreambuf_iterator<char>()};
-		size_t found = bytes.find(_EOF_);
-		assert(found != std::string::npos);
-		songData = std::string{bytes.begin(), bytes.begin() + found};
+		size_t foundDelim = bytes.find("\r\n");
+		assert(("No song name specified!", foundDelim != std::string::npos));
+		songName = std::string{bytes.begin(), bytes.begin() + foundDelim};
+
+		size_t foundEOF = bytes.find(_EOF_);
+		assert(("No EOF found !", foundEOF != std::string::npos));
+		songData = std::string{bytes.begin() + foundDelim + 2, bytes.begin() + foundEOF};
 	}
 	catch (const system::system_error& err)
 	{
 		// no handle for now
 		throw err;
 	}
-	return songData;
+	return std::make_pair(std::move(songName), std::move(songData));
 }
 
 void YandexClient::Connect()
@@ -573,7 +577,7 @@ std::vector<File_Ptr> AppClient::GetDirFiles(
 	//		Нюанс в том, что треки в плейлисте будут как из local так и из yandex
 }
 
-std::string AppClient::GetSongData(File* file)
+std::pair<std::string, std::string> AppClient::GetSongData(File* file)
 {
 	AppFile* appFile{dynamic_cast<AppFile*>(file)};
 	assert(("Error! File is not an appFile!", appFile != nullptr));

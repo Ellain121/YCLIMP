@@ -64,8 +64,8 @@ public:
 
 	virtual std::vector<File_Ptr> GetDirFiles(
 		bool noDirs = false, bool onlyMusicExtensions = false, bool recursively = false);
-	virtual std::string GetSongData();
-	virtual std::string GetFromType() const;
+	virtual std::pair<std::string, std::string> GetSongData();
+	virtual std::string							GetFromType() const;
 
 public:
 	Client&		client;
@@ -147,8 +147,8 @@ public:
 	 */
 	virtual std::vector<File_Ptr> GetDirFiles(File* file, bool noDirs = false,
 		bool onlyMusicExtensions = false,
-		bool recursively = false) = 0;							  // if directory
-	virtual std::string			  GetSongData(File* file) = 0;	  // if file
+		bool recursively = false) = 0;	  // if directory
+	virtual std::pair<std::string, std::string> GetSongData(File* file) = 0;	// if file
 	// virtual std::string       getFileNewName() = 0;
 
 public:
@@ -171,8 +171,9 @@ public:
 
 	virtual std::vector<File_Ptr> GetDirFiles(File* file, bool noDirs = false,
 		bool onlyMusicExtensions = false,
-		bool recursively = false) override;							   // if directory
-	virtual std::string			  GetSongData(File* file) override;	   // if file
+		bool recursively = false) override;	   // if directory
+	virtual std::pair<std::string, std::string> GetSongData(
+		File* file) override;	 // if file
 };
 
 class YandexClient : public Client
@@ -194,8 +195,9 @@ public:
 
 	virtual std::vector<File_Ptr> GetDirFiles(File* file, bool noDirs = false,
 		bool onlyMusicExtensions = false,
-		bool recursively = false) override;							   // if directory
-	virtual std::string			  GetSongData(File* file) override;	   // if file
+		bool recursively = false) override;	   // if directory
+	virtual std::pair<std::string, std::string> GetSongData(
+		File* file) override;	 // if file
 private:
 	void Connect();
 	void Disconnect();
@@ -224,8 +226,9 @@ public:
 
 	virtual std::vector<File_Ptr> GetDirFiles(File* file, bool noDirs = false,
 		bool onlyMusicExtensions = false,
-		bool recursively = false) override;							   // if directory
-	virtual std::string			  GetSongData(File* file) override;	   // if file
+		bool recursively = false) override;	   // if directory
+	virtual std::pair<std::string, std::string> GetSongData(
+		File* file) override;	 // if file
 
 private:
 	FSClient&	  fsClient;

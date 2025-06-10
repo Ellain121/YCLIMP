@@ -382,6 +382,10 @@ Recti SWManager::GetBoundsFromPosType(PositionType posType) const
 	{
 		return mRightElementRect;
 	}
+	else if (posType == PositionType::Central)
+	{
+		return mCentralElementRect;
+	}
 	else
 	{
 		assert(("Wrong posType in GetBoundsFromPosType", false));

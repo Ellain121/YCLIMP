@@ -196,6 +196,8 @@ void NewElementsDialogBundle::Draw() const
 
 void NewElementsDialogBundle::HandleResizeEvent(const Recti& newRect)
 {
+	mBounds = newRect;
+	mActiveDialogElement->HandleResizeEvent(newRect);
 }
 
 void NewElementsDialogBundle::HandleRawInput(int rawChar)

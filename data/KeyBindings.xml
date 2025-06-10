@@ -101,6 +101,7 @@
             <action name="volume_up"            key="plus"></action>
             <action name="volume_down"          key="minus"></action>
             <action name="toggle_repeat_mode"   key="r"></action>
+            <action name="skip_track"           key="n"></action>
         </global>
         <local>
             <action name="help" key="h"></action>

@@ -13,21 +13,24 @@ typename ListDialogElement<ElementPtr>::LocalBounds CalculateLocalBounds(
 	auto&												textBounds = lBounds.text;
 	auto&												listBounds = lBounds.list;
 	auto&												confirmBounds = lBounds.confirm;
-	textBounds.left = newBounds.left;
-	textBounds.width = newBounds.width;
+	textBounds.left = newBounds.left + 1;
+	textBounds.width = newBounds.width - 1;
 	listBounds.left = newBounds.left;
 	listBounds.width = newBounds.width;
 	confirmBounds.left = newBounds.left;
 	confirmBounds.width = newBounds.width;
 
+	// top text
 	textBounds.top = newBounds.top;
-	textBounds.height = std::max(static_cast<int>(newBounds.height * 0.1), 1);
+	textBounds.height = 1;
 
-	listBounds.top = newBounds.top + textBounds.height + 1;
-	listBounds.height = std::max(static_cast<int>(newBounds.height * 0.8), 3);
+	// middle content
+	listBounds.top = newBounds.top + textBounds.height;
+	listBounds.height = newBounds.height - 1 - 1;
 
-	confirmBounds.top = listBounds.top + listBounds.height + 1;
-	confirmBounds.height = std::max(static_cast<int>(newBounds.height * 0.1), 1);
+	// bottom text
+	confirmBounds.top = listBounds.top + listBounds.height;
+	confirmBounds.height = 1;
 
 	return lBounds;
 }
@@ -68,6 +71,7 @@ void ListDialogElement<ElementPtr>::HandleResizeEvent(const Recti& newRect)
 	if (IsFinished() == true)
 		return;
 
+	mBounds = newRect;
 	mLBounds = CalculateLocalBounds<ElementPtr>(newRect);
 	mFileSelector.HandleResize(mLBounds.list);
 	mHorizontalChoice.HandleResizeEvent(mLBounds.confirm);

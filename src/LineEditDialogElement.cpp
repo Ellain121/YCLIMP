@@ -10,21 +10,24 @@ LineEditDialogElement::LocalBounds CalculateLocalBounds(const Recti& newBounds)
 	auto&							   textBounds = lBounds.text;
 	auto&							   lineEdit = lBounds.lineEdit;
 	auto&							   confirmBounds = lBounds.confirm;
-	textBounds.left = newBounds.left;
-	textBounds.width = newBounds.width;
+	textBounds.left = newBounds.left + 1;
+	textBounds.width = newBounds.width - 1;
 	lineEdit.left = newBounds.left + 1;
 	lineEdit.width = newBounds.width;
 	confirmBounds.left = newBounds.left;
 	confirmBounds.width = newBounds.width;
 
+	// top text
 	textBounds.top = newBounds.top;
-	textBounds.height = std::max(static_cast<int>(newBounds.height * 0.4), 1);
+	textBounds.height = 1;
 
-	lineEdit.top = newBounds.top + textBounds.height + 1;
-	lineEdit.height = std::max(static_cast<int>(newBounds.height * 0.4), 1);
+	// middle content
+	lineEdit.top = newBounds.top + textBounds.height;
+	lineEdit.height = newBounds.height - 1 - 1;
 
-	confirmBounds.top = lineEdit.top + lineEdit.height + 1;
-	confirmBounds.height = std::max(static_cast<int>(newBounds.height * 0.2), 1);
+	// bottom text
+	confirmBounds.top = lineEdit.top + lineEdit.height;
+	confirmBounds.height = 1;
 
 	return lBounds;
 }
@@ -46,8 +49,13 @@ void LineEditDialogElement::Draw() const
 
 	clearArea(mBounds);
 	printwMsgBox(mText, mLocalBounds.text);
-	PrintwInLimitedX({mLocalBounds.lineEdit.left, mLocalBounds.lineEdit.top},
-		"->" + mLineEditText + "<-",
+
+	std::string formatedText = "->" + mLineEditText + "<-";
+	int			fSize = formatedText.size();
+	auto&		bounds = mLocalBounds.lineEdit;
+	int			midX = bounds.left + bounds.width / 2 - fSize / 2;
+	int			midY = bounds.top + bounds.height / 2 - 1;
+	PrintwInLimitedX({midX, midY}, "->" + mLineEditText + "<-",
 		mLocalBounds.lineEdit.left + mLocalBounds.lineEdit.width);
 	mHorizontalChoice.Draw();
 }
@@ -57,6 +65,7 @@ void LineEditDialogElement::HandleResizeEvent(const Recti& newRect)
 	if (IsFinished() == true)
 		return;
 
+	mBounds = newRect;
 	mLocalBounds = CalculateLocalBounds(newRect);
 	mHorizontalChoice.HandleResizeEvent(mLocalBounds.confirm);
 }
