@@ -9,11 +9,11 @@ add_subdirectory(SQLiteCpp)
 
 
 ###
-set (BOOST_LIBS Boost::asio Boost::system)
 
 if(DOWNLOAD_LOCAL_BOOST)
     message(STATUS "Boost will be downloaded in build directory")
-    # set(BOOST_INCLUDE_LIBRARIES asio filesystem system)
+    #set(BOOST_INCLUDE_LIBRARIES asio filesystem system)
+    set (BOOST_LIBS Boost::asio Boost::system)
 
     if (NOT CMAKE_POLICY_VERSION_MINIMUM EQUAL "3.5")
         message("Please set flags as in instruction.")
