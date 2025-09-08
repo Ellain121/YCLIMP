@@ -3,7 +3,7 @@
 #include <cassert>
 
 DialogBundle::DialogBundle(Context context, const Recti& bounds)
-	: mBounds{bounds}
-	, mContext{context}
+    : mBounds{bounds}
+    , mContext{context}
 {
 }

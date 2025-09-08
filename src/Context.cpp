@@ -6,12 +6,12 @@
 #include "SWManager.hpp"
 
 Context::Context(MainWindow& mWindow, SWManager& swManager, FSClient& fsClient,
-	YandexClient& yandexClient, AppClient& appClient, DatabaseManager& dbManager)
-	: mainWindow{mWindow}
-	, swManager{swManager}
-	, fsClient{fsClient}
-	, yaClient{yandexClient}
-	, appClient{appClient}
-	, dbManager{dbManager}
+    YandexClient& yandexClient, AppClient& appClient, DatabaseManager& dbManager)
+    : mainWindow{mWindow}
+    , swManager{swManager}
+    , fsClient{fsClient}
+    , yaClient{yandexClient}
+    , appClient{appClient}
+    , dbManager{dbManager}
 {
 }

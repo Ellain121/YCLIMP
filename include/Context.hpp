@@ -13,14 +13,14 @@ class DatabaseManager;
 struct Context
 {
 public:
-	Context(MainWindow& mWindow, SWManager& swManager, FSClient& fsClient,
-		YandexClient& yandexClient, AppClient& appClient, DatabaseManager& dbManager);
+    Context(MainWindow& mWindow, SWManager& swManager, FSClient& fsClient,
+        YandexClient& yandexClient, AppClient& appClient, DatabaseManager& dbManager);
 
 public:
-	MainWindow&		 mainWindow;
-	SWManager&		 swManager;
-	FSClient&		 fsClient;
-	YandexClient&	 yaClient;
-	AppClient&		 appClient;
-	DatabaseManager& dbManager;
+    MainWindow&      mainWindow;
+    SWManager&       swManager;
+    FSClient&        fsClient;
+    YandexClient&    yaClient;
+    AppClient&       appClient;
+    DatabaseManager& dbManager;
 };

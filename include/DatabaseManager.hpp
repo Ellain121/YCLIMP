@@ -8,7 +8,7 @@
 namespace DB
 {
 void ExecAndDebug(SQLite::Statement& query);
-}	 // namespace DB
+}    // namespace DB
 
 /**
  * @brief The DatabaseManager class
@@ -22,18 +22,18 @@ void ExecAndDebug(SQLite::Statement& query);
 class DatabaseManager
 {
 public:
-	static DatabaseManager& Instance();
+    static DatabaseManager& Instance();
 
-	static void DebugQuery(const std::string& query, int modifiedRows);
-
-private:
-	DatabaseManager(const std::string& path);
-	DatabaseManager& operator=(const DatabaseManager& rhs) = delete;
+    static void DebugQuery(const std::string& query, int modifiedRows);
 
 private:
-	SQLite::Database mDatabase;
+    DatabaseManager(const std::string& path);
+    DatabaseManager& operator=(const DatabaseManager& rhs) = delete;
+
+private:
+    SQLite::Database mDatabase;
 
 public:
-	const TrackDao	  trackDao;
-	const PlaylistDao playlistDao;
+    const TrackDao    trackDao;
+    const PlaylistDao playlistDao;
 };

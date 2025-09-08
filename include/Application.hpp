@@ -16,19 +16,19 @@
 class Application
 {
 public:
-	Application();
-	void Run();
+    Application();
+    void Run();
 
 private:
-	void EventLoopIterationStart();
-	void ProcessEvents();
-	void Draw() const;
-	void PreUpdate();
-	void Update();
+    void EventLoopIterationStart();
+    void ProcessEvents();
+    void Draw() const;
+    void PreUpdate();
+    void Update();
 
-	void ProcessUserEvents();
+    void ProcessUserEvents();
 
 private:
-	MainWindow mWindow;
-	bool	   mbProgramActive;
+    MainWindow mWindow;
+    bool       mbProgramActive;
 };

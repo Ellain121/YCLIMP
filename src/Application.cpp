@@ -3,65 +3,65 @@
 #include "Debug.hpp"
 #include "Primitives.hpp"
 #include "ncurses.h"
-#undef OK	 // ncurses for some reason defines OK in global scope
+#undef OK    // ncurses for some reason defines OK in global scope
 // which is not good for other libraries
 
 #include <string>
 
 Application::Application()
-	: mbProgramActive{true}
+    : mbProgramActive{true}
 {
-	Debug::Init();
+    Debug::Init();
 }
 
 void Application::Run()
 {
-	while (mbProgramActive)
-	{
-		EventLoopIterationStart();
-		ProcessEvents();
-		PreUpdate();
-		Update();
-		Draw();
-	}
+    while (mbProgramActive)
+    {
+        EventLoopIterationStart();
+        ProcessEvents();
+        PreUpdate();
+        Update();
+        Draw();
+    }
 }
 
 void Application::EventLoopIterationStart()
 {
-	mWindow.EventLoopIterationStart();
+    mWindow.EventLoopIterationStart();
 }
 
 void Application::ProcessEvents()
 {
-	ProcessUserEvents();
+    ProcessUserEvents();
 }
 
 void Application::PreUpdate()
 {
-	mWindow.PreUpdate();
+    mWindow.PreUpdate();
 }
 
 void Application::Update()
 {
-	mWindow.Update();
+    mWindow.Update();
 }
 
 void Application::Draw() const
 {
-	clear();
+    clear();
 
-	mWindow.Draw();
+    mWindow.Draw();
 
-	refresh();
+    refresh();
 }
 
 void Application::ProcessUserEvents()
 {
-	int	  k = getch();
-	Event event{k};
-	//	if (event.key == EEventKey::Q)
-	//	{
-	//		mbProgramActive = false;
-	//	}
-	mWindow.HandleUserEvent(event);
+    int   k = getch();
+    Event event{k};
+    //	if (event.key == EEventKey::Q)
+    //	{
+    //		mbProgramActive = false;
+    //	}
+    mWindow.HandleUserEvent(event);
 }

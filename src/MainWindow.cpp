@@ -12,19 +12,19 @@
 #undef OK
 
 MainWindow::MainWindow()
-	: mRect{0, 0, COLS, LINES}
-	, mSWManager{Recti{0, 0, mRect.width, mRect.height}, *this}
-	, mHotKeyComponent{"MainWindow"}
+    : mRect{0, 0, COLS, LINES}
+    , mSWManager{Recti{0, 0, mRect.width, mRect.height}, *this}
+    , mHotKeyComponent{"MainWindow"}
 {
-	InitializeHotKeyActions();
-	RegisterSubWindows();
+    InitializeHotKeyActions();
+    RegisterSubWindows();
 
-	mSWManager.InitStartupState();
+    mSWManager.InitStartupState();
 }
 
 void MainWindow::EventLoopIterationStart()
 {
-	mSWManager.EventLoopIterationStart();
+    mSWManager.EventLoopIterationStart();
 }
 
 void MainWindow::InitializeHotKeyActions()
@@ -33,49 +33,49 @@ void MainWindow::InitializeHotKeyActions()
 
 void MainWindow::RegisterSubWindows()
 {
-	mSWManager.RegisterSW<PlayerStatusSW>(ESWTypes::PlayerStatus);
-	mSWManager.RegisterSW<PlayerSW>(ESWTypes::Player);
-	mSWManager.RegisterSW<LocalFilesSW>(ESWTypes::LocalFiles);
-	mSWManager.RegisterSW<YandexFilesSW>(ESWTypes::YandexFiles);
-	mSWManager.RegisterSW<AppFilesSW>(ESWTypes::AppFiles);
-	mSWManager.RegisterSW<DialogSW>(ESWTypes::Dialog);
+    mSWManager.RegisterSW<PlayerStatusSW>(ESWTypes::PlayerStatus);
+    mSWManager.RegisterSW<PlayerSW>(ESWTypes::Player);
+    mSWManager.RegisterSW<LocalFilesSW>(ESWTypes::LocalFiles);
+    mSWManager.RegisterSW<YandexFilesSW>(ESWTypes::YandexFiles);
+    mSWManager.RegisterSW<AppFilesSW>(ESWTypes::AppFiles);
+    mSWManager.RegisterSW<DialogSW>(ESWTypes::Dialog);
 }
 
 void MainWindow::HandleUserEvent(Event event)
 {
-	// MainWindow Events:
-	if (event.key == EEventKey::KeyResize)
-	{
-		HandleResizeEvent();
-	}
+    // MainWindow Events:
+    if (event.key == EEventKey::KeyResize)
+    {
+        HandleResizeEvent();
+    }
 
-	mHotKeyComponent.HandleUserEvent(event, false);
-	mSWManager.HandleUserEvent(event);
+    mHotKeyComponent.HandleUserEvent(event, false);
+    mSWManager.HandleUserEvent(event);
 }
 
 void MainWindow::PreUpdate()
 {
-	mSWManager.HandleSWEvents();
+    mSWManager.HandleSWEvents();
 }
 
 Vector2i MainWindow::GetWindowSize() const
 {
-	return Vector2i{COLS, LINES};
+    return Vector2i{COLS, LINES};
 }
 
 void MainWindow::HandleResizeEvent()
 {
-	auto wSize = GetWindowSize();
-	mRect = Rect{0, 0, wSize.x, wSize.y};
-	mSWManager.HandleResizeEvent(mRect);
+    auto wSize = GetWindowSize();
+    mRect = Rect{0, 0, wSize.x, wSize.y};
+    mSWManager.HandleResizeEvent(mRect);
 }
 
 void MainWindow::Update()
 {
-	mSWManager.Update();
+    mSWManager.Update();
 }
 
 void MainWindow::Draw() const
 {
-	mSWManager.Draw();
+    mSWManager.Draw();
 }

@@ -18,23 +18,23 @@
 class AppFilesSW : public SubWindow
 {
 public:
-	AppFilesSW(
-		Recti bounds, Context context, SWHolderType inHolderType = SWHolderType::None);
+    AppFilesSW(
+        Recti bounds, Context context, SWHolderType inHolderType = SWHolderType::None);
 
-	virtual void HandleUserEvent(Event event, bool rawInputMode) override;
-	virtual void HandleSWEvents(std::vector<SWEvent>& swEvents) override;
-	virtual void Update() override;
-	virtual void Reload() override;
-	virtual void Draw() const override;
-	virtual void HandleResizeEvent(const Recti& newRect) override;
-
-private:
-	virtual void InitializeHotKeysActions() override;
-	void		 InitializeInitialState();
-	void		 OpenSelectedDirectory();
+    virtual void HandleUserEvent(Event event, bool rawInputMode) override;
+    virtual void HandleSWEvents(std::vector<SWEvent>& swEvents) override;
+    virtual void Update() override;
+    virtual void Reload() override;
+    virtual void Draw() const override;
+    virtual void HandleResizeEvent(const Recti& newRect) override;
 
 private:
-	File_Ptr						 mCurrentDir;
-	FileSelector					 mFileSelector;
-	std::stack<ElementSelectorState> mFileselectorPrevStates;
+    virtual void InitializeHotKeysActions() override;
+    void         InitializeInitialState();
+    void         OpenSelectedDirectory();
+
+private:
+    File_Ptr                         mCurrentDir;
+    FileSelector                     mFileSelector;
+    std::stack<ElementSelectorState> mFileselectorPrevStates;
 };
